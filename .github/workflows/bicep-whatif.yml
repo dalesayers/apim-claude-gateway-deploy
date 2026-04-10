@@ -1,0 +1,54 @@
+name: Bicep What-If
+
+on:
+  workflow_dispatch:
+    inputs:
+      parametersFile:
+        description: Path to the bicepparam file
+        required: false
+        default: main.customer.bicepparam
+      resourceGroupName:
+        description: Override resource group name
+        required: false
+        default: rg-ai-gateway
+      location:
+        description: Override Azure location
+        required: false
+        default: eastus2
+  pull_request:
+    paths:
+      - 'main.bicep'
+      - 'main.customer.example.bicepparam'
+      - 'main.customer.bicepparam'
+      - 'deploy-standard.ps1'
+      - 'infra/**'
+      - '.github/workflows/bicep-whatif.yml'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  what-if:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install Bicep
+        run: az bicep install
+
+      - name: Run what-if
+        shell: pwsh
+        run: |
+          $parametersFile = if ('${{ github.event.inputs.parametersFile }}') { '${{ github.event.inputs.parametersFile }}' } else { 'main.customer.bicepparam' }
+          $resourceGroupName = if ('${{ github.event.inputs.resourceGroupName }}') { '${{ github.event.inputs.resourceGroupName }}' } else { 'rg-ai-gateway' }
+          $location = if ('${{ github.event.inputs.location }}') { '${{ github.event.inputs.location }}' } else { 'eastus2' }
+          ./deploy-standard.ps1 -SubscriptionId '${{ secrets.AZURE_SUBSCRIPTION_ID }}' -ParametersFile $parametersFile -ResourceGroupName $resourceGroupName -Location $location -WhatIfOnly -Force

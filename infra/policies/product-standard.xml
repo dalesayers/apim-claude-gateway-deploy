@@ -1,0 +1,21 @@
+<policies>
+  <inbound>
+    <base />
+    <llm-token-limit
+      counter-key="@(context.Subscription.Id)"
+      tokens-per-minute="10000"
+      token-quota="500000"
+      token-quota-period="Monthly"
+      estimate-prompt-tokens="true"
+      remaining-tokens-header-name="x-remaining-tokens"
+      remaining-tokens-variable-name="remainingTokens"
+      remaining-quota-tokens-header-name="x-remaining-monthly"
+      remaining-quota-tokens-variable-name="remainingQuotaTokens" />
+  </inbound>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>
