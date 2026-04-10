@@ -18,6 +18,33 @@ The package intentionally does not ship with:
 - a mock backend path in the repo
 - customer-specific secrets or parameter values
 
+## Reference Architecture
+
+```mermaid
+flowchart LR
+  Caller["Client Apps / Postman / Claude Code"] -->|"Ocp-Apim-Subscription-Key\nx-team-id\nPOST /claude/v1/messages"| APIM
+
+  subgraph APIM["Azure API Management"]
+    direction TB
+    Products["Products\nclaude-enterprise\nclaude-standard\nclaude-restricted"]
+    API["Claude Gateway API\nAuth, headers, metrics,\nsynthetic Anthropic headers"]
+    Subs["Sample APIM Subscriptions\nsample-enterprise-prod\nsample-standard-prod\nsample-restricted-prod"]
+    Products --> API
+    Subs --> Products
+  end
+
+  APIM -->|"Managed identity auth\nAnthropic-compatible gateway"| Foundry
+  Foundry["Customer Azure AI Foundry\nClaude-capable backend URL"]
+
+  APIM --> Monitor
+  Monitor["Application Insights +\nLog Analytics"]
+
+  style Caller fill:#f4f1ea,stroke:#5a4b36,stroke-width:1.5px
+  style APIM fill:#eef6ff,stroke:#1f5fbf,stroke-width:2px
+  style Foundry fill:#eefaf1,stroke:#237a3b,stroke-width:1.5px
+  style Monitor fill:#fff8e8,stroke:#a26a00,stroke-width:1.5px
+```
+
 ## What deploys
 
 - Log Analytics workspace
