@@ -107,7 +107,7 @@ if ($PdfPath) {
   }
 
   $htmlUri = 'file:///' + (($HtmlPath -replace '\\', '/') -replace ' ', '%20')
-  & $BrowserPath --headless --disable-gpu --print-to-pdf-no-header --print-to-pdf="$PdfPath" $htmlUri | Out-Null
+  & $BrowserPath --headless --disable-gpu --no-pdf-header-footer --print-to-pdf="$PdfPath" $htmlUri | Out-Null
 
   if ($LASTEXITCODE -ne 0) {
     throw "PDF generation failed for: $PdfPath"
