@@ -86,6 +86,32 @@ Repository-only support files:
 - `.github/workflows/bicep-deploy.yml`
 - `docs/internal/runbook.md`
 
+## Document Map
+
+Use the documents in this order:
+
+1. `apim-claude-foundry-gateway-standard-mode-deployment.md`
+  Purpose: deployment contract for the customer platform team.
+  Use it to understand required inputs, fixed defaults, and the supported deployment flow.
+
+2. `apim-claude-foundry-gateway-customer-guide.md`
+  Purpose: gateway consumer guide for app teams.
+  Use it to understand the gateway endpoint, required headers, sample requests, response headers, and common errors.
+
+3. `apim-claude-foundry-gateway-internal-runbook.md`
+  Purpose: operator and support guide.
+  Use it for validation, troubleshooting, operational handling, and support workflows after deployment.
+
+4. `apim-claude-foundry-gateway-setup.md`
+  Purpose: full engineering reference.
+  Use it for architecture details, full policy walkthroughs, manual APIM setup understanding, and deeper technical review.
+
+Recommended audience split:
+
+- Customer platform team: start with the standard mode deployment guide, then use the internal runbook for operations.
+- Application teams: use the customer guide.
+- Engineering reviewers or implementers: use the full setup guide when deeper context is needed.
+
 ## Automation
 
 The repo includes GitHub Actions workflows under `.github/workflows`:
