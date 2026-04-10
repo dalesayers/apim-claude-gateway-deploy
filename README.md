@@ -1,6 +1,22 @@
 # Azure APIM Claude Gateway
 
-This folder is the customer deployment package for the Claude-compatible Azure API Management gateway.
+Customer-deployable Azure API Management gateway package for a Claude-compatible endpoint backed by the customer's own Azure AI Foundry deployment.
+
+## Intended Use
+
+This repository is designed for customer platform teams that want to deploy a controlled Claude-compatible gateway on Azure using Bicep and Azure CLI.
+
+The package intentionally ships with:
+
+- fixed APIM product names and token policies
+- a minimal sample APIM subscription set for onboarding
+- tested APIM policy XML for authentication, rate limiting, observability, and Anthropic-compatible response headers
+
+The package intentionally does not ship with:
+
+- a shared backend model deployment
+- a mock backend path in the repo
+- customer-specific secrets or parameter values
 
 ## What deploys
 
@@ -23,6 +39,21 @@ Default sample subscriptions:
 
 The template creates sample APIM subscriptions so a customer can onboard and validate against their own Azure AI Foundry backend without hand-creating test subscriptions first.
 
+## Required Customer Inputs
+
+Before deployment, the customer must provide:
+
+- Azure subscription ID
+- Azure region
+- resource group name
+- APIM name
+- Application Insights name
+- Log Analytics workspace name
+- publisher name and email
+- their own Claude-capable Azure AI Foundry backend URL
+
+The example parameter file includes a placeholder for `foundryBackendUrl`. It must be replaced before deployment.
+
 ## Quickstart
 
 1. Copy `main.customer.example.bicepparam` to `main.customer.bicepparam`.
@@ -37,6 +68,23 @@ The template creates sample APIM subscriptions so a customer can onboard and val
 
 6. Grant the APIM managed identity `Cognitive Services User` on the target Azure AI Foundry resource.
 7. Use one of the created APIM subscriptions to validate `POST /claude/v1/messages` through the APIM gateway.
+
+## Handoff Files
+
+Primary deployment and handoff files:
+
+- `main.bicep`
+- `main.customer.example.bicepparam`
+- `deploy-standard.ps1`
+- `docs/customer/deployment.md`
+- `docs/customer/validation.md`
+- `docs/customer/troubleshooting.md`
+
+Repository-only support files:
+
+- `.github/workflows/bicep-whatif.yml`
+- `.github/workflows/bicep-deploy.yml`
+- `docs/internal/runbook.md`
 
 ## Automation
 
@@ -54,6 +102,21 @@ Both workflows expect these repository or environment secrets:
 ## Customer Validation
 
 This repo does not include a mock backend path. Customers must provide their own Azure AI Foundry Claude backend URL and validate against their own deployment using the created APIM products, subscriptions, and policies.
+
+## Files Not Committed
+
+The following files are intentionally ignored because they are local or generated artifacts:
+
+- `main.customer.bicepparam`
+- `main.json`
+
+## Repository Governance
+
+- `main` should stay protected and receive changes through pull requests.
+- Customer-specific parameter values should never be committed.
+- Workflow changes should be reviewed carefully because they control deployment behavior.
+
+See `CONTRIBUTING.md` for the expected change process.
 
 ## Layout
 
