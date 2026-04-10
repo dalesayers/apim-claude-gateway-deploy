@@ -18,6 +18,12 @@ The package intentionally does not ship with:
 - a mock backend path in the repo
 - customer-specific secrets or parameter values
 
+## Supported Deployment Path
+
+Use `deploy-standard.ps1` as the supported deployment entry point for this repository.
+
+The older imperative bootstrap script has been moved to `scripts/legacy/deploy-apim-claude-gateway.ps1` and is retained only as historical/internal reference material. It is not the recommended customer deployment path.
+
 ## Reference Architecture
 
 ```mermaid
@@ -123,6 +129,7 @@ Repository-only support files:
 - `.github/workflows/bicep-whatif.yml`
 - `.github/workflows/bicep-deploy.yml`
 - `docs/internal/runbook.md`
+- `scripts/legacy/deploy-apim-claude-gateway.ps1` (legacy reference only)
 
 ## Document Map
 
@@ -197,7 +204,9 @@ No guarantees or warranties of any kind, express or implied, are provided in con
 ## Layout
 
 - `main.bicep`: deployment entry point
+- `deploy-standard.ps1`: supported customer deployment wrapper
 - `infra/modules`: modular resource definitions
 - `infra/policies`: APIM policy XML loaded by Bicep
 - `docs/customer`: customer-facing deployment and validation notes
 - `docs/internal`: operator runbook notes
+- `scripts/legacy`: historical or non-supported helper scripts

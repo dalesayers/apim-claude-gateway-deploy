@@ -1,3 +1,10 @@
+<#
+LEGACY SCRIPT
+
+This script is retained for historical and internal reference only.
+Use deploy-standard.ps1 for the supported customer deployment path.
+#>
+
 param(
     [string]$ResourceGroup = 'rg-ai-gateway',
     [string]$Location = 'eastus2',
@@ -194,21 +201,21 @@ $apiPolicyXml = @'
     <base />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION A: AUTHENTICATION
       Use Managed Identity to authenticate to Foundry.
       Requires: APIM system-assigned MI granted
       "Cognitive Services User" role on the Foundry resource.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION B: REQUIRED ANTHROPIC HEADERS
       anthropic-version is mandatory on every request to the
       Anthropic Messages API. Without it, Foundry returns 400.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-header name="anthropic-version" exists-action="override">
       <value>2023-06-01</value>
@@ -219,13 +226,13 @@ $apiPolicyXml = @'
     </set-header>
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION C: STRIP NATIVE ANTHROPIC RATE LIMIT HEADERS
       Foundry does not pass through Anthropic's native rate
       limit headers. Strip any that callers may have sent
       inbound to prevent confusion. APIM reconstructs them
       outbound from its own tracking data (Section H below).
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-header name="anthropic-ratelimit-tokens-limit" exists-action="delete" />
     <set-header name="anthropic-ratelimit-tokens-remaining" exists-action="delete" />
@@ -241,26 +248,26 @@ $apiPolicyXml = @'
     <set-header name="anthropic-ratelimit-requests-reset" exists-action="delete" />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION D: CAPTURE TEAM/DEPARTMENT IDENTITY
       x-team-id is a caller-supplied header used for metric
       dimensions and chargeback reporting in App Insights.
       NOTE: This is for OBSERVABILITY only, not enforcement.
       Enforcement uses context.Subscription.Id (Product policy).
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-variable name="dept"
       value="@(context.Request.Headers.GetValueOrDefault(&quot;x-team-id&quot;, &quot;default&quot;))" />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION E: PRE-FLIGHT PROMPT TOKEN ESTIMATION
       Estimates input token count from request body before
       the call completes. Used to populate the
       anthropic-ratelimit-tokens-remaining synthetic header
       with a reasonable value on the outbound leg.
       Approximation: ~3.8 characters per token.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-variable name="estInputTokens"
       value="@{
@@ -273,14 +280,14 @@ $apiPolicyXml = @'
       }" />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION F: TOKEN METRICS EMISSION
       Sends Total Tokens, Prompt Tokens, Completion Tokens
       to Application Insights as custom metrics under the
       ClaudeUsage namespace. Query in Log Analytics:
         customMetrics | where name startswith "ClaudeUsage"
       NOTE: Max 5 custom dimensions per policy (Azure Monitor limit).
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <llm-emit-token-metric namespace="ClaudeUsage">
       <dimension name="API ID" />
@@ -296,14 +303,14 @@ $apiPolicyXml = @'
     <base />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION G: EXTRACT ACTUAL TOKEN USAGE FROM RESPONSE
       Claude returns usage in the response body as:
         { "usage": { "input_tokens": N, "output_tokens": N } }
       We extract these to populate headers and for logging.
       Body is read with preserveContent=true so the response
       body is still forwarded to the caller intact.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-variable name="inputTokens"
       value="@{
@@ -322,7 +329,7 @@ $apiPolicyXml = @'
       }" />
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION H: SYNTHESIZE ANTHROPIC-COMPATIBLE RATE LIMIT HEADERS
       Foundry strips all anthropic-ratelimit-* headers natively.
       APIM reconstructs them from its own tracking data so that
@@ -333,7 +340,7 @@ $apiPolicyXml = @'
         - tokens-limit: exact (hardcoded from product tier)
         - tokens-remaining: approximate (APIM counter, not Anthropic-precise)
         - tokens-reset: approximate (UtcNow + 60s window estimate)
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-variable name="productTpmLimit"
       value="@(context.Product?.Name == &quot;claude-enterprise&quot; ? &quot;50000&quot; :
@@ -364,11 +371,11 @@ $apiPolicyXml = @'
     </set-header>
 
     <!--
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
       SECTION I: CUSTOM TRANSPARENCY HEADERS
       These are non-standard headers that provide additional
       visibility to callers beyond the Anthropic-compatible set.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <set-header name="x-token-usage" exists-action="override">
       <value>@($&quot;{context.Variables[&quot;inputTokens&quot;]}in/{context.Variables[&quot;outputTokens&quot;]}out&quot;)</value>
@@ -460,14 +467,14 @@ $operationPolicyXml = @'
     <base />
 
     <!--
-      ══════════════════════════════════════════════════════
-      MOCK BACKEND — OPTION B (return-response)
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+      MOCK BACKEND ΓÇö OPTION B (return-response)
 
       Intercepts the request before it reaches the Foundry
       backend and returns a hardcoded Anthropic Messages API
       shaped response. The API-level outbound policy still
       executes fully against this response.
-      ══════════════════════════════════════════════════════
+      ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
     -->
     <return-response>
       <set-status code="200" reason="OK" />
