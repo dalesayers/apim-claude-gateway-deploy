@@ -118,6 +118,14 @@ The following files are intentionally ignored because they are local or generate
 
 See `CONTRIBUTING.md` for the expected change process.
 
+## Disclaimer
+
+This repository and any accompanying materials, including scripts, templates, policy files, workflow definitions, and sample configuration, are provided `AS IS` and `WITH ALL FAULTS`.
+
+Any pricing, quota, performance, or capacity examples are illustrative only and do not represent final production commitments.
+
+No guarantees or warranties of any kind, express or implied, are provided in connection with this repository. See `DISCLAIMER.md` for the full repository disclaimer.
+
 ## Layout
 
 - `main.bicep`: deployment entry point
