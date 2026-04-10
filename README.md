@@ -80,6 +80,17 @@ Primary deployment and handoff files:
 - `docs/customer/validation.md`
 - `docs/customer/troubleshooting.md`
 
+Published handoff document set in this repo:
+
+- `docs/handoff/apim-claude-foundry-gateway-standard-mode-deployment.md`
+- `docs/handoff/apim-claude-foundry-gateway-customer-guide.md`
+- `docs/handoff/apim-claude-foundry-gateway-internal-runbook.md`
+- `docs/handoff/apim-claude-foundry-gateway-setup.md`
+- `docs/handoff/pdf/apim-claude-foundry-gateway-standard-mode-deployment.pdf`
+- `docs/handoff/pdf/apim-claude-foundry-gateway-customer-guide.pdf`
+- `docs/handoff/pdf/apim-claude-foundry-gateway-internal-runbook.pdf`
+- `docs/handoff/pdf/apim-claude-foundry-gateway-setup.pdf`
+
 Repository-only support files:
 
 - `.github/workflows/bicep-whatif.yml`
@@ -90,21 +101,25 @@ Repository-only support files:
 
 Use the documents in this order:
 
-1. `apim-claude-foundry-gateway-standard-mode-deployment.md`
+1. `docs/handoff/apim-claude-foundry-gateway-standard-mode-deployment.md`
   Purpose: deployment contract for the customer platform team.
   Use it to understand required inputs, fixed defaults, and the supported deployment flow.
+  PDF: `docs/handoff/pdf/apim-claude-foundry-gateway-standard-mode-deployment.pdf`
 
-2. `apim-claude-foundry-gateway-customer-guide.md`
+2. `docs/handoff/apim-claude-foundry-gateway-customer-guide.md`
   Purpose: gateway consumer guide for app teams.
   Use it to understand the gateway endpoint, required headers, sample requests, response headers, and common errors.
+  PDF: `docs/handoff/pdf/apim-claude-foundry-gateway-customer-guide.pdf`
 
-3. `apim-claude-foundry-gateway-internal-runbook.md`
+3. `docs/handoff/apim-claude-foundry-gateway-internal-runbook.md`
   Purpose: operator and support guide.
   Use it for validation, troubleshooting, operational handling, and support workflows after deployment.
+  PDF: `docs/handoff/pdf/apim-claude-foundry-gateway-internal-runbook.pdf`
 
-4. `apim-claude-foundry-gateway-setup.md`
+4. `docs/handoff/apim-claude-foundry-gateway-setup.md`
   Purpose: full engineering reference.
   Use it for architecture details, full policy walkthroughs, manual APIM setup understanding, and deeper technical review.
+  PDF: `docs/handoff/pdf/apim-claude-foundry-gateway-setup.pdf`
 
 Recommended audience split:
 
