@@ -1,7 +1,9 @@
 param(
   [string]$MarkdownPath = (Join-Path $PSScriptRoot '..\apim-claude-foundry-gateway-setup.md'),
   [string]$HtmlPath = (Join-Path $PSScriptRoot '..\apim-claude-foundry-gateway-setup.html'),
-  [string]$DocumentTitle = 'Azure APIM AI Gateway for Claude on Microsoft Foundry'
+  [string]$DocumentTitle = 'Azure APIM AI Gateway for Claude on Microsoft Foundry',
+  [string]$PdfPath,
+  [string]$BrowserPath = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -98,3 +100,18 @@ $($rendered.Html)
 
 Set-Content -Path $htmlPath -Value $htmlDocument -Encoding utf8
 Write-Host "Generated: $htmlPath"
+
+if ($PdfPath) {
+  if (-not (Test-Path $BrowserPath)) {
+    throw "Browser executable not found: $BrowserPath"
+  }
+
+  $htmlUri = 'file:///' + (($HtmlPath -replace '\\', '/') -replace ' ', '%20')
+  & $BrowserPath --headless --disable-gpu --print-to-pdf-no-header --print-to-pdf="$PdfPath" $htmlUri | Out-Null
+
+  if ($LASTEXITCODE -ne 0) {
+    throw "PDF generation failed for: $PdfPath"
+  }
+
+  Write-Host "Generated: $PdfPath"
+}
